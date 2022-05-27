@@ -2,7 +2,7 @@
 
 트레이딩뷰에서 전달되는 웹훅을 처리하는 서버입니다.
 
-[설치](#설치) | [포트포워딩](#포트포워딩)
+[설치](#설치) | [포트포워딩](#포트포워딩) | [테스트](#테스트)
 
 ---
 
@@ -64,3 +64,57 @@ python run.py
 ## 포트포워딩
 
 > TradingHook은 8000번 포트로 실행됩니다. 공유기의 포트포워드 설정으로 외부포트는 80번 혹은 443번에서 8000번 포트로 포트포워딩 하도록 설정하세요.
+
+&nbsp;&nbsp;
+
+---
+
+## 테스트
+
+> 트레이딩훅 실행과 설정이 완료되면 이제 트레이딩뷰에서 파인스크립트를 새로 만들어 아래 스크립트를 넣고 차트에 넣기(Add to Chart)를 누릅니다.
+
+```js
+// This source code is subject to the terms of the Mozilla Public License 2.0 at https://mozilla.org/MPL/2.0/
+// © dokang
+//@version=5
+
+password = input.string("Your Password", title="Password", confirm = true)
+// 원화로 10000원을 100%로 진입하게 합니다
+strategy("[TH]TEST", currency = currency.KRW, initial_capital = 10000, default_qty_type = strategy.percent_of_equity, default_qty_value = 100, overlay = true)
+
+// TradingHook 라이브러리를 불러와서 HT라는 이름으로 사용합니다
+import dokang/TradingHook/1 as HT
+
+// isOk라는 변수를 통해 전략이 추가된 시점부터 진입하게 합니다
+var isOk = false
+if barstate.islastconfirmedhistory
+    isOk := true
+// isOK가 true 일 때
+if isOk
+    // 봉 처음에 바로 매수
+    strategy.entry("Buy", strategy.long, alert_message = HT.buy_message(password))
+    // 그 다음 봉 시작하자마자 매도
+    strategy.close("Buy", alert_message = HT.sell_message(password, "100%"))
+```
+
+&nbsp;
+
+> - HT.buy_message(string password, float amount = na, string order_name="Order")
+>   - [필수] password 패스워드
+>   - [선택] amount 수량
+>   - [선택] order_name 주문이름
+>
+> ### HT.buy_message(password)는 전략테스터의 기본 설정값(initial_capital, default_qty_type, default_qty_value)에 맞춰서 매수 메세지를 생성하고 트레이딩훅 서버로 전달합니다.
+>
+> ### HT.buy_message(password, amount=10)는 전략테스터의 기본 설정값과 상관없이 내가 입력한 수량(10) 만큼 매수 메세지를 생성하고 트레이딩훅 서버로 전달합니다.
+
+&nbsp;
+
+> - HT.sell_message(string password, float amount = na, string order_name="Order")
+>   - [필수] password 패스워드
+>   - [선택] amount 수량
+>   - [선택] order_name 주문이름
+>
+> ### HT.buy_message(password)는 전략테스터의 기본 설정값(initial_capital, default_qty_type, default_qty_value)에 맞춰서 매수 메세지를 생성하고 트레이딩훅 서버로 전달합니다.
+>
+> ### HT.buy_message(password, amount=10)는 전략테스터의 기본 설정값과 상관없이 내가 입력한 수량(10) 만큼 매수 메세지를 생성하고 트레이딩훅 서버로 전달합니다.
