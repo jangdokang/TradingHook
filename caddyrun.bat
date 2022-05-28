@@ -1,0 +1,1 @@
+call caddy run
