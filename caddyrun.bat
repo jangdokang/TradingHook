@@ -1,1 +1,2 @@
 call caddy run
+pause
