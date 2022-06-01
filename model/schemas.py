@@ -1,5 +1,7 @@
 from pydantic import BaseModel, BaseSettings, Field, validator
 from typing import Literal
+import os
+env = "dev" if os.path.exists("dev.env") else "prod"
 
 
 class Settings(BaseSettings):
@@ -12,7 +14,7 @@ class Settings(BaseSettings):
     WHITELIST: list[str] | None = None
 
     class Config:
-        env_file = '.env'
+        env_file = '.env' if env == "prod" else 'dev.env'
         env_file_encoding = "utf-8"
 
 
