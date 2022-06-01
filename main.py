@@ -27,7 +27,7 @@ class Exchange(BaseModel):
 async def settings_whitelist_middleware(request: Request, call_next):
     if request.client.host not in whitelist:
         msg = f"{request.client.host}는 안됩니다"
-        log_message(msg)
+        print(msg)
         return JSONResponse(status_code=status.HTTP_403_FORBIDDEN, content=f"{request.client.host} Not Allowed")
     response = await call_next(request)
     return response

@@ -103,6 +103,7 @@ celerybeat.pid
 
 # Environments
 .venv
+.env
 env/
 venv/
 ENV/
@@ -126,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# test
+start_dev.bat
