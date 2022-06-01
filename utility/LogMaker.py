@@ -1,7 +1,9 @@
 from utility import settings
 from datetime import datetime, timezone, timedelta
 from dhooks import Webhook
-hook = Webhook(settings.DISCORD_WEBHOOK_URL)
+
+hook = Webhook(settings.DISCORD_WEBHOOK_URL.replace("discordapp", "discord"))
+
 
 def parse_time(utc_timestamp):
     timestamp = utc_timestamp + timedelta(hours=9).seconds
@@ -15,6 +17,7 @@ def log_message(message):
     else:
         print(message)
 
+
 def log_order_message(exchange_name, order_result: dict):
     print(order_result)
     date = parse_time(datetime.utcnow().timestamp())
@@ -24,4 +27,3 @@ def log_order_message(exchange_name, order_result: dict):
         amount = order_result.get('amount')
     log_message(
         f"[OrderResult]\n{date} {exchange_name} {order_result.get('symbol')} {order_result.get('type')} {order_result.get('side')} {amount}")
-
