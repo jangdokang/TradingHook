@@ -4,6 +4,10 @@
 
 &nbsp;
 
+- 지원 거래소
+  - 업비트 KRW(원화) 마켓
+  - 바이낸스 현물/선물 USDT 마켓
+
 #### <주의>
 
 _본 프로젝트는 개인적으로 개발한 프로젝트를 오픈소스로 공유한 것으로_
@@ -46,8 +50,8 @@ UPBIT_KEY = "발급받은 업비트 ACCESS KEY"
 UPBIT_SECRET = "발급받은 업비트 SECRET KEY"
 
 # BINANCE에서 발급받은 KEY와 SECRET을 적어주세요
-BINANCE_KEY = ""
-BINANCE_SECRET = ""
+BINANCE_KEY = "발급받은 바이낸스 API KEY"
+BINANCE_SECRET = "발급받은 바이낸스 SECRET KEY"
 
 # DISCORD 웹훅 URL을 적어주세요
 DISCORD_WEBHOOK_URL = "디스코드 웹훅 URL"
@@ -71,13 +75,14 @@ python run.py
 
 ## 포트포워딩
 
-> TradingHook은 8000번 포트로 실행됩니다. 공유기의 포트포워드 설정으로 외부포트는 80번 혹은 443번에서 8000번 포트로 포트포워딩 하도록 설정하세요.
+> TradingHook은 8000번 포트로 실행됩니다. 공유기의 포트포워드 설정으로 외부포트는 80번에서 8000번 포트로 포트포워딩 하도록 설정하세요.
 
 &nbsp;&nbsp;
 
 ---
 
 ## 테스트
+### 현물(업비트)
 
 > 트레이딩훅 실행과 설정이 완료되면 이제 트레이딩뷰에서 파인스크립트를 새로 만들어 아래 스크립트를 넣고 차트에 넣기(Add to Chart)를 누릅니다.
 
@@ -91,7 +96,7 @@ password = input.string("Your Password", title="Password", confirm = true)
 strategy("[TH] TEST", currency = currency.KRW, initial_capital = 10000, default_qty_type = strategy.percent_of_equity, default_qty_value = 100, overlay = true)
 
 // TradingHook 라이브러리를 불러와서 TH라는 이름으로 사용합니다
-import dokang/TradingHook/1 as TH
+import dokang/TradingHook/2 as TH
 
 // isOk라는 변수를 통해 전략이 추가된 시점부터 진입하게 합니다
 var isOk = false

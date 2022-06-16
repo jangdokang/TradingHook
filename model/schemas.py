@@ -24,11 +24,13 @@ class OrderBase(BaseModel):
     base: str
     quote: Literal["KRW", "USDT", "USDTPERP"]
     type: Literal["MARKET", "LIMIT"]
-    side: Literal["BUY", "SELL"]
+    side: Literal["BUY", "SELL", "entry/buy", "entry/sell", "close/buy", "close/sell"]
     amount: float
     price: float
     cost: float | None = None,
     sell_percent: str | None = None,
+    close_percent: str | None = None,
+    leverage: int = 0,
     order_name: str = "주문"
 
     @validator("password")
