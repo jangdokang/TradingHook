@@ -129,3 +129,9 @@ if isOk
 >   - [선택] order_name 주문이름
 >
 > #### TH.sell_message("암호", "100%")는 전략테스터의 기본 설정값과 상관 없이 내가 입력한 퍼센트 만큼 보유물량에서 매도합니다.
+&nbsp;
+## Dependency
+
+> [fastapi](https://github.com/tiangolo/fastapi)
+> [ccxt](https://github.com/ccxt/ccxt)
+> [uvicorn](https://github.com/encode/uvicorn)

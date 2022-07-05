@@ -62,7 +62,6 @@ class Binance:
         result = None
         symbol = order_info.base+'/'+order_info.quote.replace("PERP", "")
         position = self.binance_future.fetch_positions_risk(symbols=[symbol])
-        print(position)
         if position:
             contracts = position[0]["contracts"]
             if contracts == 0:

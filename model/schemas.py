@@ -22,7 +22,7 @@ class OrderBase(BaseModel):
     password: str
     exchange: Literal["UPBIT", "BINANCE"]
     base: str
-    quote: Literal["KRW", "USDT", "USDTPERP"]
+    quote: Literal["KRW", "USDT", "USDTPERP", "BUSD", "BUSDPERP"]
     type: Literal["MARKET", "LIMIT"]
     side: Literal["BUY", "SELL", "entry/buy", "entry/sell", "close/buy", "close/sell"]
     amount: float

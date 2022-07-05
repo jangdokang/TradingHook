@@ -110,7 +110,7 @@ async def order(order_info: MarketOrder, background_tasks: BackgroundTasks):
         elif order_info.side == "entry/sell":
             msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: SHORT\nPrice:{order_info.price}\nAmount: {order_info.amount}"
         elif order_info.side == "close/buy":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: Close LONG\nPrice:{order_info.price}\nPercent: {order_info.close_percent}"
+            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: Close SHORT\nPrice:{order_info.price}\nPercent: {order_info.close_percent}"
         elif order_info.side == "close/sell":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: Close SHORT\nPrice: {order_info.price}\nPercent: {order_info.close_percent}"
+            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: Close LONG\nPrice: {order_info.price}\nPercent: {order_info.close_percent}"
         background_tasks.add_task(log_message, msg)
