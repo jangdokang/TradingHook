@@ -12,6 +12,7 @@ class Settings(BaseSettings):
     BINANCE_SECRET: str | None = None
     DISCORD_WEBHOOK_URL: str | None = None
     WHITELIST: list[str] | None = None
+    PORT: int | None = None
 
     class Config:
         env_file = '.env' if env == "prod" else 'dev.env'
@@ -45,10 +46,8 @@ class MarketOrder(OrderBase):
     price: float | None = None
     type: Literal["MARKET"] = "MARKET"
 
-
 class MarketBuyOrder(MarketOrder):
     side: Literal['BUY'] = "BUY"
-
 
 class MarketSellOrder(MarketOrder):
     price: float = None

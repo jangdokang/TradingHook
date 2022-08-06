@@ -14,11 +14,81 @@ _본 프로젝트는 개인적으로 개발한 프로젝트를 오픈소스로 �
 
 _발생하는 문제에 대한 모든 책임은 본인에게 있습니다._
 
-[설치](#설치) | [포트포워딩](#포트포워딩) | [테스트](#테스트)
+[리눅스 설치(클라우드)](#리눅스설치) | [윈도우PC로 설치](#윈도우설치) | [포트포워딩](#포트포워딩) | [테스트](#테스트)
 
 ---
+## 리눅스설치
 
-## 설치
+
+> ### [1] VULTR 가입
+>[무료 $100 크레딧 받고 가입](https://www.vultr.com/?ref=9160659-8H) 
+
+&nbsp;
+
+> ### [2] 우분투 22.04로 생성 후 초기 설정 (영상참고)
+> * 유저 추가
+> * ssh 접속 프로그램 설치(mobaxterm)
+> * 패키지 업데이트/업그레이드
+
+&nbsp;
+
+> ### [3] TradingHook 다운
+```git
+git clone https://github.com/jangdokang/TradingHook.git
+```
+
+> ### [4] 필요한 라이브러리 설치
+```bash
+pip install -r requirements.txt
+``` 
+
+> ### [5] 트레이딩뷰IP 방화벽 허용
+```bash
+sudo ufw allow from 52.89.214.238 to any port 80
+sudo ufw allow from 34.212.75.30 to any port 80
+sudo ufw allow from 54.218.53.128 to any port 80
+sudo ufw allow from 52.32.178.7 to any port 80
+``` 
+
+> ### [선택사항] 나의 PC IP 방화벽 허용(*내PC도 트레이딩훅에 접근하고 싶을 때만 쓰세요*)
+```
+sudo ufw allow from 나의IP to any port 80
+```
+&nbsp;
+
+> ### [6] .env 파일 수정
+
+```python
+# 파인스크립트에서 정한 PASSWORD와 똑같이 적어주세요
+PASSWORD = "Your Password"      # 패스워드 적어주세요
+
+# UPBIT에서 발급받은 KEY와 SECRET을 입력하세요
+UPBIT_KEY = ""                  # 업비트 Access Key 입력
+UPBIT_SECRET = ""               # 업비트 Secret Key 입력
+
+# BINANCE에서 발급받은 KEY와 SECRET을 입력하세요
+BINANCE_KEY = ""                # 바이낸스 API KEY 입력
+BINANCE_SECRET = ""             # 바이낸스 SECRET KEY 입력
+
+# DISCORD 웹훅 URL을 입력하세요
+DISCORD_WEBHOOK_URL = ""        # 웹훅 URL 입력
+
+# WHITELIST, 서버를 실행할 PC의 IP를 입력하세요
+WHITELIST = ["127.0.0.1"]
+
+# 서버의 포트 번호를 설정하세요
+PORT = "8000"
+```
+> ### [7] 트레이딩훅 실행
+```bash
+python3 run.py
+```
+
+&nbsp;&nbsp;&nbsp;
+
+
+---
+## 윈도우설치
 
 > ### [1] 커맨드창에서 가상환경 설치
 
@@ -43,21 +113,24 @@ pip install -r requirements.txt
 
 ```python
 # 파인스크립트에서 정한 PASSWORD와 똑같이 적어주세요
-PASSWORD = "패스워드 적어주세요"
+PASSWORD = "Your Password"      # 패스워드 적어주세요
 
-# UPBIT에서 발급받은 KEY와 SECRET을 적어주세요
-UPBIT_KEY = "발급받은 업비트 ACCESS KEY"
-UPBIT_SECRET = "발급받은 업비트 SECRET KEY"
+# UPBIT에서 발급받은 KEY와 SECRET을 입력하세요
+UPBIT_KEY = ""                  # 업비트 Access Key 입력
+UPBIT_SECRET = ""               # 업비트 Secret Key 입력
 
-# BINANCE에서 발급받은 KEY와 SECRET을 적어주세요
-BINANCE_KEY = "발급받은 바이낸스 API KEY"
-BINANCE_SECRET = "발급받은 바이낸스 SECRET KEY"
+# BINANCE에서 발급받은 KEY와 SECRET을 입력하세요
+BINANCE_KEY = ""                # 바이낸스 API KEY 입력
+BINANCE_SECRET = ""             # 바이낸스 SECRET KEY 입력
 
-# DISCORD 웹훅 URL을 적어주세요
-DISCORD_WEBHOOK_URL = "디스코드 웹훅 URL"
+# DISCORD 웹훅 URL을 입력하세요
+DISCORD_WEBHOOK_URL = ""        # 웹훅 URL 입력
 
-# WHITELIST, 서버를 실행할 PC의 IP를 적어주세요
+# WHITELIST, 서버를 실행할 PC의 IP를 입력하세요
 WHITELIST = ["127.0.0.1"]
+
+# 서버의 포트 번호를 설정하세요
+PORT = "8000"
 ```
 
 &nbsp;

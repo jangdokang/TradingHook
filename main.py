@@ -1,13 +1,14 @@
+# version 0.0.3
 from fastapi.exception_handlers import (
     request_validation_exception_handler,
 )
-from fastapi import FastAPI, Depends, HTTPException, Request, status, BackgroundTasks
+from fastapi import FastAPI, Depends, HTTPException, Request, status
 from fastapi.responses import JSONResponse, RedirectResponse
 from fastapi.exceptions import RequestValidationError
 from requests import request
 from exchange import Upbit, Binance
 from model import MarketOrder, BaseModel
-from utility import settings, log_message, log_order_message
+from utility import settings, log_message, log_order_message, log_alert_message
 app = FastAPI()
 
 whitelist = ["52.89.214.238", "34.212.75.30",
@@ -78,7 +79,7 @@ async def welcome():
 
 
 @ app.post("/order")
-async def order(order_info: MarketOrder, background_tasks: BackgroundTasks):
+async def order(order_info: MarketOrder):
     result = None
     try:
         exchange_name = order_info.exchange.upper()
@@ -99,18 +100,7 @@ async def order(order_info: MarketOrder, background_tasks: BackgroundTasks):
 
     except Exception as e:
         log_message(f"[Error]\n{e}")
+        log_alert_message(order_info)
 
     finally:
-        if order_info.side == "BUY":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: {order_info.side}\nPrice: {order_info.price}\nAmount: {order_info.amount}"
-        elif order_info.side == "SELL":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: {order_info.side}\nPrice: {order_info.price}\nPercent: {order_info.sell_percent}"
-        elif order_info.side == "entry/buy":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: LONG\nPrice:{order_info.price}\nAmount: {order_info.amount}"
-        elif order_info.side == "entry/sell":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: SHORT\nPrice:{order_info.price}\nAmount: {order_info.amount}"
-        elif order_info.side == "close/buy":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: Close SHORT\nPrice:{order_info.price}\nPercent: {order_info.close_percent}"
-        elif order_info.side == "close/sell":
-            msg = f"[alert_message]\nExchange: {order_info.exchange}\nOrderName: {order_info.order_name}\nSymbol: {order_info.base}/{order_info.quote}\nSide: Close LONG\nPrice: {order_info.price}\nPercent: {order_info.close_percent}"
-        background_tasks.add_task(log_message, msg)
+        pass

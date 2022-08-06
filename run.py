@@ -1,8 +1,8 @@
 import uvicorn
-
+from utility import settings
 
 def start_server(host="0.0.0.0",
-                 port=8000):
+                 port=settings.PORT):
     uvicorn.run("main:app",
                 host=host,
                 port=port,
