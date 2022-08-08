@@ -21,7 +21,7 @@ def parse_time(utc_timestamp):
 
 def logger_test():
     date = parse_time(datetime.utcnow().timestamp())
-    logger.debug(date)
+    logger.info(date)
 
 def log_message(message="None", embed: Embed = None):
     if hook:
@@ -31,7 +31,7 @@ def log_message(message="None", embed: Embed = None):
             hook.send(message)
         # hook.send(str(message), embed)
     else:
-        logger.debug(message)
+        logger.info(message)
         print(message)
 
 def log_order_message(exchange_name, order_result: dict, order_info: MarketOrder):
@@ -127,7 +127,7 @@ def print_alert_message(order_info: MarketOrder):
             f_name = "close_percent"
             value = f"{order_info.close_percent}%"
     msg = f"\n[alert_message]\nexchange: {order_info.exchange}\norder_name: {order_info.order_name}\nsymbol: {order_info.base}/{order_info.quote}\nside: {side}\nprice: {order_info.price}\n{f_name}: {value}"
-    logger.debug("주문 성공 웹훅메세지"+msg)
+    logger.info("주문 성공 웹훅메세지"+msg)
     # print(msg)
 
 def log_alert_message(order_info: MarketOrder):
@@ -181,5 +181,5 @@ def log_alert_message(order_info: MarketOrder):
     embed.add_field("side", side, inline=False)
     embed.add_field(f_name, str(value))
     msg = f"\n[alert_message]\nexchange: {order_info.exchange}\norder_name: {order_info.order_name}\nsymbol: {order_info.base}/{order_info.quote}\nside: {side}\nprice: {order_info.price}\n{f_name}: {value}"
-    logger.debug("주문 실패 웹훅메세지"+msg)
+    logger.info("주문 실패 웹훅메세지"+msg)
     log_message(embed=embed)
