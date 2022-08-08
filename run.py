@@ -1,8 +1,10 @@
 import uvicorn
+import fire
 from utility import settings
 
+
 def start_server(host="0.0.0.0",
-                 port=settings.PORT):
+                 port=8000 if settings.PORT is None else settings.PORT ):
     uvicorn.run("main:app",
                 host=host,
                 port=port,
@@ -10,4 +12,4 @@ def start_server(host="0.0.0.0",
 
 
 if __name__ == "__main__":
-    start_server()
+    fire.Fire(start_server)

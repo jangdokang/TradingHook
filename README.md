@@ -25,66 +25,11 @@ _발생하는 문제에 대한 모든 책임은 본인에게 있습니다._
 
 &nbsp;
 
-> ### [2] 우분투 22.04로 생성 후 초기 설정 (영상참고)
-> * 유저 추가
-> * ssh 접속 프로그램 설치(mobaxterm)
-> * 패키지 업데이트/업그레이드
 
-&nbsp;
-
-> ### [3] TradingHook 다운
-```git
-git clone https://github.com/jangdokang/TradingHook.git
-```
-
-> ### [4] 필요한 라이브러리 설치
+> ### [3] 홈 디렉토리에서 .bash_aliases 다운받기
 ```bash
-pip install -r requirements.txt
+작성중
 ``` 
-
-> ### [5] 트레이딩뷰IP 방화벽 허용
-```bash
-sudo ufw allow from 52.89.214.238 to any port 80
-sudo ufw allow from 34.212.75.30 to any port 80
-sudo ufw allow from 54.218.53.128 to any port 80
-sudo ufw allow from 52.32.178.7 to any port 80
-``` 
-
-> ### [선택사항] 나의 PC IP 방화벽 허용(*내PC도 트레이딩훅에 접근하고 싶을 때만 쓰세요*)
-```
-sudo ufw allow from 나의IP to any port 80
-```
-&nbsp;
-
-> ### [6] .env 파일 수정
-
-```python
-# 파인스크립트에서 정한 PASSWORD와 똑같이 적어주세요
-PASSWORD = "Your Password"      # 패스워드 적어주세요
-
-# UPBIT에서 발급받은 KEY와 SECRET을 입력하세요
-UPBIT_KEY = ""                  # 업비트 Access Key 입력
-UPBIT_SECRET = ""               # 업비트 Secret Key 입력
-
-# BINANCE에서 발급받은 KEY와 SECRET을 입력하세요
-BINANCE_KEY = ""                # 바이낸스 API KEY 입력
-BINANCE_SECRET = ""             # 바이낸스 SECRET KEY 입력
-
-# DISCORD 웹훅 URL을 입력하세요
-DISCORD_WEBHOOK_URL = ""        # 웹훅 URL 입력
-
-# WHITELIST, 서버를 실행할 PC의 IP를 입력하세요
-WHITELIST = ["127.0.0.1"]
-
-# 서버의 포트 번호를 설정하세요
-PORT = "8000"
-```
-> ### [7] 트레이딩훅 실행
-```bash
-python3 run.py
-```
-
-&nbsp;&nbsp;&nbsp;
 
 
 ---
@@ -130,7 +75,7 @@ DISCORD_WEBHOOK_URL = ""        # 웹훅 URL 입력
 WHITELIST = ["127.0.0.1"]
 
 # 서버의 포트 번호를 설정하세요
-PORT = "8000"
+PORT = "8000" # 리눅스 클라우드(vultr)는 80으로 수정
 ```
 
 &nbsp;

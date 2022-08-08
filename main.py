@@ -1,4 +1,4 @@
-# version 0.0.3
+# version 0.0.4
 from fastapi.exception_handlers import (
     request_validation_exception_handler,
 )
@@ -8,7 +8,9 @@ from fastapi.exceptions import RequestValidationError
 from requests import request
 from exchange import Upbit, Binance
 from model import MarketOrder, BaseModel
-from utility import settings, log_message, log_order_message, log_alert_message
+from utility import settings, log_message, log_order_message, log_alert_message, print_alert_message, logger_test, log_order_error_message, log_validation_error_message
+
+
 app = FastAPI()
 
 whitelist = ["52.89.214.238", "34.212.75.30",
@@ -36,13 +38,13 @@ async def settings_whitelist_middleware(request: Request, call_next):
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
-    msgs = [f"[에러{index+1}] "+error.get("msg")
+    msgs = [f"[에러{index+1}] "+ f"{error.get('msg')} \n{error.get('loc')}"
             for index, error in enumerate(exc.errors())]
     message = "[Error]\n"
     for msg in msgs:
         message = message+msg+"\n"
-
-    log_message(f"{message}\n {exc.body}")
+    
+    log_validation_error_message(f"{message}\n {exc.body}")
     return await request_validation_exception_handler(request, exc)
 
 
@@ -73,6 +75,11 @@ async def get_ip():
 async def welcome():
     return "hi!!"
 
+@ app.get("/test")
+async def welcome():
+    logger_test()
+    return "test"
+
 @ app.get("/honey")
 async def welcome():
     return RedirectResponse("https://finlife.fss.or.kr/deposit/selectDeposit.do?menuId=2000100")
@@ -96,10 +103,11 @@ async def order(order_info: MarketOrder):
             result = exchange.dict()[order_info.exchange].market_entry(order_info)
         elif order_info.side.startswith("close/"):
             result = exchange.dict()[order_info.exchange].market_close(order_info)
-        log_order_message(exchange_name, result)
+        log_order_message(exchange_name, result, order_info)
+        print_alert_message(order_info)
 
     except Exception as e:
-        log_message(f"[Error]\n{e}")
+        log_order_error_message(e, order_info)
         log_alert_message(order_info)
 
     finally:

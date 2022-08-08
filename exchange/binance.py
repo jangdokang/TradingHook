@@ -11,7 +11,7 @@ class Binance:
     def __init__(self, key, secret):
         cls = type(self)
         if not hasattr(cls, "_init"):
-            print("binance client start")
+            # print("binance client start")
             self.binance_future = ccxt.binance({
                 'apiKey': key,
                 'secret': secret,
@@ -48,6 +48,7 @@ class Binance:
             raise Exception("팔 수 있는 물량이 없습니다.")
 
     def market_entry(self, order_info: MarketOrder):
+        print(order_info.leverage)
         if "PERP" in order_info.quote:
             if order_info.leverage != 0:
                 self.set_leverage(order_info)
@@ -66,7 +67,11 @@ class Binance:
             contracts = position[0]["contracts"]
             if contracts == 0:
                 raise Exception("포지션이 없습니다")
-            close_amount = contracts*float(order_info.close_percent)/100
+            if order_info.close_percent != "0":
+                close_amount = contracts*float(order_info.close_percent)/100
+            elif order_info.amount != 0:
+                close_amount = order_info.amount
+            
             return self.binance_future.create_order(symbol, order_info.type.lower(),
                                                     order_info.side.lower().split("/")[-1], close_amount, params={"reduceOnly": True})
         else:

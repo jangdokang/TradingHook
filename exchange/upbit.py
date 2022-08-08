@@ -11,7 +11,7 @@ class Upbit:
     def __init__(self, key, secret):
         cls = type(self)
         if not hasattr(cls, "_init"):
-            print("upbit client start\n")
+            # print("upbit client start\n")
             self.upbit = ccxt.upbit({
                 'apiKey': key,
                 'secret': secret,
