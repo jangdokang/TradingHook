@@ -28,7 +28,7 @@ _발생하는 문제에 대한 모든 책임은 본인에게 있습니다._
 
 > ### [3] 홈 디렉토리에서 .bash_aliases 다운받기
 ```bash
-작성중
+curl -LO https://raw.githubusercontent.com/jangdokang/TradingHook/main/linux/.bash_aliases
 ``` 
 
 
