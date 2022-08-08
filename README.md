@@ -46,9 +46,9 @@ if barstate.islastconfirmedhistory
 
 if isOk
     if (close > open and open > close[1])
-    	strategy.entry("BarUp", strategy.long, alert_message = TH.entry_message("dokang"))
+    	strategy.entry("BarUp", strategy.long, alert_message = TH.entry_message("dokang", order_name="바업다운 롱"))
     if (close < open and open < close[1])
-    	strategy.entry("BarDn", strategy.short, alert_message = TH.entry_message("dokang"))
+    	strategy.entry("BarDn", strategy.short, alert_message = TH.entry_message("dokang", order_name="바업다운 숏"))
 ``` 
 
 ---
