@@ -31,6 +31,25 @@ _발생하는 문제에 대한 모든 책임은 본인에게 있습니다._
 curl -LO https://raw.githubusercontent.com/jangdokang/TradingHook/main/linux/.bash_aliases
 ``` 
 
+> ### [4] 테스트 코드
+```javascript
+//@version=5
+strategy("BarUpDn Strategy", overlay=true, initial_capital=10 ,default_qty_type = strategy.percent_of_equity, default_qty_value = 100)
+import dokang/TradingHook/3 as TH
+
+maxIdLossPcnt = input.float(1, "Max Intraday Loss(%)")
+strategy.risk.max_intraday_loss(maxIdLossPcnt, strategy.percent_of_equity)
+
+var isOk = false
+if barstate.islastconfirmedhistory
+    isOk := true
+
+if isOk
+    if (close > open and open > close[1])
+    	strategy.entry("BarUp", strategy.long, alert_message = TH.entry_message("dokang"))
+    if (close < open and open < close[1])
+    	strategy.entry("BarDn", strategy.short, alert_message = TH.entry_message("dokang"))
+``` 
 
 ---
 ## 윈도우설치
