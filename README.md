@@ -1,4 +1,4 @@
-# TradingHook
+# TradingHook - version 0.0.3
 
 ### 트레이딩뷰에서 전달되는 웹훅을 처리하는 서버입니다.
 
@@ -17,21 +17,23 @@ _발생하는 문제에 대한 모든 책임은 본인에게 있습니다._
 [리눅스 설치(클라우드)](#리눅스설치) | [윈도우PC로 설치](#윈도우설치) | [포트포워딩](#포트포워딩) | [테스트](#테스트)
 
 ---
+
 ## 리눅스설치
 
-
 > ### [1] VULTR 가입
->[무료 $100 크레딧 받고 가입](https://www.vultr.com/?ref=9160659-8H) 
+>
+> [무료 $100 크레딧 받고 가입](https://www.vultr.com/?ref=9160659-8H)
 
 &nbsp;
 
-
 > ### [3] 홈 디렉토리에서 .bash_aliases 다운받기
+
 ```bash
 curl -LO https://raw.githubusercontent.com/jangdokang/TradingHook/main/linux/.bash_aliases
-``` 
+```
 
 > ### [4] 테스트 코드
+
 ```javascript
 //@version=5
 strategy("BarUpDn Strategy", overlay=true, initial_capital=10 ,default_qty_type = strategy.percent_of_equity, default_qty_value = 100)
@@ -49,9 +51,10 @@ if isOk
     	strategy.entry("BarUp", strategy.long, alert_message = TH.entry_message("dokang", order_name="바업다운 롱"))
     if (close < open and open < close[1])
     	strategy.entry("BarDn", strategy.short, alert_message = TH.entry_message("dokang", order_name="바업다운 숏"))
-``` 
+```
 
 ---
+
 ## 윈도우설치
 
 > ### [1] 커맨드창에서 가상환경 설치
@@ -119,6 +122,7 @@ python run.py
 ---
 
 ## 테스트
+
 ### 현물(업비트)
 
 > 트레이딩훅 실행과 설정이 완료되면 이제 트레이딩뷰에서 파인스크립트를 새로 만들어 아래 스크립트를 넣고 차트에 넣기(Add to Chart)를 누릅니다.
@@ -166,9 +170,9 @@ if isOk
 >   - [선택] order_name 주문이름
 >
 > #### TH.sell_message("암호", "100%")는 전략테스터의 기본 설정값과 상관 없이 내가 입력한 퍼센트 만큼 보유물량에서 매도합니다.
-&nbsp;
+>
+> &nbsp;
+
 ## Dependency
 
-> [fastapi](https://github.com/tiangolo/fastapi)
-> [ccxt](https://github.com/ccxt/ccxt)
-> [uvicorn](https://github.com/encode/uvicorn)
+> [fastapi](https://github.com/tiangolo/fastapi) > [ccxt](https://github.com/ccxt/ccxt) > [uvicorn](https://github.com/encode/uvicorn)
